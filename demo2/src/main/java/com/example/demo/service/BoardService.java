@@ -1,13 +1,11 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Board;
-import com.example.demo.domain.BoardDto;
-import com.example.demo.domain.User;
-import com.example.demo.domain.UserDto;
+import com.example.demo.domain.*;
 import com.example.demo.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +18,15 @@ public class BoardService {
         boardRepository.save(Board.makeBoard(boardDto));
     }
 
-    public List<Board> getBoard() {
-        return boardRepository.findAll();
+    public List<BoardResponseDto> getBoard() {
+        List<Board> boardList = boardRepository.findAll();
+        List<BoardResponseDto> boardResponseDtos = new ArrayList<>();
+
+        for(Board board : boardList) {
+            Integer commentCount = board.getCommentList().size();
+            BoardResponseDto boardResponseDto = BoardResponseDto.boardToResponseDto(board, commentCount);
+            boardResponseDtos.add(boardResponseDto);
+        }
+        return boardResponseDtos;
     }
 }
