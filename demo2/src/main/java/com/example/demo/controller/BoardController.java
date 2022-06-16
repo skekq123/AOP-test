@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Board;
 import com.example.demo.domain.BoardDto;
+import com.example.demo.domain.BoardResponseDto;
 import com.example.demo.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class BoardController {
     }
 
     @GetMapping("/get/board")
-    public List<Board> getBoard() {
+    public List<BoardResponseDto> getBoard() {
         return boardService.getBoard();
     }
 }
